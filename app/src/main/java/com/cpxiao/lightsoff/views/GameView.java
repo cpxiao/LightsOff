@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.cpxiao.lightsoff.OnGameListener;
 
+import java.util.Random;
+
 /**
  * Created by cpxiao on 5/15/16.
  * GameView
@@ -30,11 +32,37 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 	private int mItemWidth;
 	private int mItemHeight;
 	private int mItemRadius;
+	private int mPaddingLR;
+	private int mPaddingTB;
+	private boolean isGravityCenter = true;
 
 	private GameView(Context context) {
 		super(context);
 		getHolder().addCallback(this);
 		setOnTouchListener(this);
+	}
+
+	public GameView(Context context, int gameType, int moves) {
+		this(context);
+		String tmp = "";
+		for (int i = 0; i < 16; i++) {
+			init(5, i + 4);
+			tmp = tmp + printf();
+		}
+		Log.d(TAG, tmp);
+		init(gameType, moves);
+	}
+
+	private String printf() {
+		String tmp = "\"";
+		for (int y = 0; y < mGameType; y++) {
+			for (int x = 0; x < mGameType; x++) {
+				tmp = tmp + mStore[y][x];
+			}
+		}
+		tmp = tmp + "\",";
+//		Log.d(TAG, tmp);
+		return tmp;
 	}
 
 	public GameView(Context context, int gameType, int[] store) {
@@ -47,6 +75,22 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 		init(gameType, store);
 	}
 
+	private void init(int gameType, int moves) {
+		mGameType = gameType;
+		if (moves < 0) {
+			throw new IllegalArgumentException("moves number error!");
+		}
+		mStore = new int[gameType][gameType];
+		for (int y = 0; y < gameType; y++) {
+			for (int x = 0; x < gameType; x++) {
+				mStore[y][x] = 0;
+			}
+		}
+		Random random = new Random();
+		for (int i = 0; i < moves; i++) {
+			updateStore(random.nextInt(gameType), random.nextInt(gameType));
+		}
+	}
 
 	private void init(int gameType, int[] store) {
 		mGameType = gameType;
@@ -102,10 +146,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 	private void drawLights(Canvas canvas) {
 		for (int y = 0; y < mGameType; y++) {
 			for (int x = 0; x < mGameType; x++) {
+				int cx = mPaddingLR + mItemWidth / 2 + mItemWidth * x;
+				int cy = mPaddingTB + mItemHeight / 2 + mItemHeight * y;
+
 				if (mStore[y][x] == 1) {
-					lightOn(canvas, x, y);
+					lightOn(canvas, cx, cy);
 				} else {
-					lightOff(canvas, x, y);
+					lightOff(canvas, cx, cy);
 				}
 			}
 		}
@@ -113,42 +160,46 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
 	private Paint mPaint = new Paint();
 
-	private void lightOn(Canvas canvas, int x, int y) {
-
-
-//		drawLight(canvas, x, y, mPaint);
-		float cx = mItemWidth / 2 + mItemWidth * x;
-		float cy = mItemHeight / 2 + mItemHeight * y;
-
+	private void lightOn(Canvas canvas, int cx, int cy) {
 
 		mPaint.setColor(Color.YELLOW);
 //		Shader shader = new RadialGradient(cx, cy, mItemRadius * 3f, Color.YELLOW, Color.GREEN, Shader.TileMode.CLAMP);
 //		mPaint.setShader(shader);
 		canvas.drawCircle(cx, cy, mItemRadius, mPaint);
+
+		mPaint.setAlpha(64);
+		canvas.drawCircle(cx, cy, (mItemRadius + mItemRadius * (1f - 0.618f)), mPaint);
 	}
 
 
-	private void lightOff(Canvas canvas, int x, int y) {
+	private void lightOff(Canvas canvas, int cx, int cy) {
 		mPaint.setColor(Color.BLACK);
-		drawLight(canvas, x, y, mPaint);
-	}
-
-	private void drawLight(Canvas canvas, int x, int y, Paint mPaint) {
-		float cx = mItemWidth / 2 + mItemWidth * x;
-		float cy = mItemHeight / 2 + mItemHeight * y;
 		canvas.drawCircle(cx, cy, mItemRadius, mPaint);
 	}
-
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 		Log.d(TAG, "surfaceChanged()..............");
 		mViewWidth = width;
 		mViewHeight = height;
-
 		mItemWidth = width / mGameType;
 		mItemHeight = height / mGameType;
-		mItemRadius = (int) (Math.min(width, height) / mGameType * 0.4);
+		mItemRadius = (int) (Math.min(width, height) / mGameType * 0.4 * 0.618);
+
+		/**
+		 * 若需要居中，则重置相关值
+		 */
+		if (isGravityCenter) {
+			if (width > height) {
+				mPaddingTB = 0;
+				mPaddingLR = (width - height) / 2;
+			} else {
+				mPaddingLR = 0;
+				mPaddingTB = (height - width) / 2;
+			}
+			mItemWidth = mItemHeight = Math.min(mItemWidth, mItemHeight);
+		}
+
 
 		myDraw();
 	}
@@ -161,13 +212,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			float tmpX = event.getX() - mPaddingLR;
+			float tmpY = event.getY() - mPaddingTB;
+			/**
+			 * 非电灯区域，不处理
+			 */
+			if (tmpX < 0 || tmpX > mGameType * mItemWidth || tmpY < 0 || tmpY > mGameType * mItemHeight) {
+				return true;
+			}
 
 			mMoves++;
 			if (mOnGameListener != null) {
 				mOnGameListener.onMovesChange(mMoves);
 			}
-			int indexX = (int) (event.getX() / mItemWidth);
-			int indexY = (int) (event.getY() / mItemHeight);
+			int indexX = (int) (tmpX / mItemWidth);
+			int indexY = (int) (tmpY / mItemHeight);
 
 			updateStore(indexX, indexY);
 			myDraw();
