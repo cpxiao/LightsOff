@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cpxiao.lightsoff.OnGameListener;
+import com.cpxiao.lightsoff.R;
 
 import java.util.Random;
 
@@ -40,20 +42,27 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 		super(context);
 		getHolder().addCallback(this);
 		setOnTouchListener(this);
+
+		initPaints();
+
+//		testInitData();
+//		testInitData();
+//		testInitData();
+//		testInitData();
+//		testInitData();
 	}
 
-	public GameView(Context context, int gameType, int moves) {
-		this(context);
+	private void testInitData() {
 		String tmp = "";
+		int gameType = 7;
 		for (int i = 0; i < 16; i++) {
-			init(5, i + 4);
-			tmp = tmp + printf();
+			init(gameType, i + gameType * 2);
+			tmp = tmp + testPrintf();
 		}
 		Log.d(TAG, tmp);
-		init(gameType, moves);
 	}
 
-	private String printf() {
+	private String testPrintf() {
 		String tmp = "\"";
 		for (int y = 0; y < mGameType; y++) {
 			for (int x = 0; x < mGameType; x++) {
@@ -64,6 +73,34 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 //		Log.d(TAG, tmp);
 		return tmp;
 	}
+
+	private Paint mPaintLightOn;
+	private Paint mPaintLightOnAlpha64;
+	private Paint mPaintLightOnAlpha32;
+	private Paint mPaintLightOff;
+
+	private void initPaints() {
+		mPaintLightOn = new Paint();
+		mPaintLightOn.setColor(Color.YELLOW);
+
+		mPaintLightOnAlpha64 = new Paint();
+		mPaintLightOnAlpha64.setColor(Color.YELLOW);
+		mPaintLightOnAlpha64.setAlpha(64);
+
+		mPaintLightOnAlpha32 = new Paint();
+		mPaintLightOnAlpha32.setColor(Color.YELLOW);
+		mPaintLightOnAlpha32.setAlpha(32);
+
+		mPaintLightOff = new Paint();
+		mPaintLightOff.setColor(Color.BLACK);
+	}
+
+	public GameView(Context context, int gameType, int moves) {
+		this(context);
+
+		init(gameType, moves);
+	}
+
 
 	public GameView(Context context, int gameType, int[] store) {
 		this(context);
@@ -135,7 +172,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 	private void myDraw() {
 		Canvas canvas = mSurfaceHolder.lockCanvas();
 
-		canvas.drawColor(Color.WHITE);
+//		canvas.drawColor(Color.WHITE);
+		canvas.drawColor(ContextCompat.getColor(getContext(), R.color.background_activity));
 		drawLights(canvas);
 		canvas.drawText("a", 0, 0, new Paint());
 
@@ -158,23 +196,21 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 		}
 	}
 
-	private Paint mPaint = new Paint();
+
+	/**
+	 * 黄金分割
+	 */
+	private static final float GOLDEN_RATIO = 0.618f;
 
 	private void lightOn(Canvas canvas, int cx, int cy) {
-
-		mPaint.setColor(Color.YELLOW);
-//		Shader shader = new RadialGradient(cx, cy, mItemRadius * 3f, Color.YELLOW, Color.GREEN, Shader.TileMode.CLAMP);
-//		mPaint.setShader(shader);
-		canvas.drawCircle(cx, cy, mItemRadius, mPaint);
-
-		mPaint.setAlpha(64);
-		canvas.drawCircle(cx, cy, (mItemRadius + mItemRadius * (1f - 0.618f)), mPaint);
+		canvas.drawCircle(cx, cy, mItemRadius, mPaintLightOn);
+		canvas.drawCircle(cx, cy, (mItemRadius + mItemRadius * (1f - GOLDEN_RATIO)), mPaintLightOnAlpha64);
+		canvas.drawCircle(cx, cy, (mItemRadius + mItemRadius * (1f - GOLDEN_RATIO) + mItemRadius * GOLDEN_RATIO * GOLDEN_RATIO * (1f - GOLDEN_RATIO)), mPaintLightOnAlpha32);
 	}
 
 
 	private void lightOff(Canvas canvas, int cx, int cy) {
-		mPaint.setColor(Color.BLACK);
-		canvas.drawCircle(cx, cy, mItemRadius, mPaint);
+		canvas.drawCircle(cx, cy, mItemRadius, mPaintLightOff);
 	}
 
 	@Override
@@ -184,7 +220,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 		mViewHeight = height;
 		mItemWidth = width / mGameType;
 		mItemHeight = height / mGameType;
-		mItemRadius = (int) (Math.min(width, height) / mGameType * 0.4 * 0.618);
+		mItemRadius = (int) (Math.min(width, height) / mGameType * 0.4 * GOLDEN_RATIO);
 
 		/**
 		 * 若需要居中，则重置相关值
