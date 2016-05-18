@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,7 +15,7 @@ import com.cpxiao.lightsoff.R;
 import com.cpxiao.lightsoff.views.GameView;
 import com.cpxiao.utils.PreferencesUtils;
 
-public class GameActivity extends BaseActivity implements OnGameListener {
+public class GameActivity extends BaseActivity implements OnGameListener, View.OnClickListener {
 	private TextView mLevelView;
 	private TextView mMovesView;
 	private TextView mBestView;
@@ -22,6 +23,8 @@ public class GameActivity extends BaseActivity implements OnGameListener {
 	private int mLevel;
 	private int mMoves;
 
+	private ImageView mRestart;
+	private ImageView mMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,12 @@ public class GameActivity extends BaseActivity implements OnGameListener {
 		mBestView.setText(getString(R.string.label_best) + String.valueOf(best));
 
 		initGameView();
+
+		mRestart = (ImageView) findViewById(R.id.btn_restart);
+		mRestart.setOnClickListener(this);
+
+		mMenu = (ImageView) findViewById(R.id.btn_menu);
+		mMenu.setOnClickListener(this);
 	}
 
 	private void initGameView() {
@@ -100,5 +109,15 @@ public class GameActivity extends BaseActivity implements OnGameListener {
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		intent.putExtra(ExtraKey.INTENT_EXTRA_LEVEL, level);
 		context.startActivity(intent);
+	}
+
+	@Override
+	public void onClick(View v) {
+		int id = v.getId();
+		if (id == R.id.btn_restart) {
+			GameActivity.comeToMe(this, mLevel);
+		} else if (id == R.id.btn_menu) {
+			MenuActivity.comeToMe(this, mLevel);
+		}
 	}
 }
