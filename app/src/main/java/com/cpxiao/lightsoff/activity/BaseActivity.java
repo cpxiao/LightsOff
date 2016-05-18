@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.cpxiao.lightsoff.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by cpxiao on 5/16/16.
@@ -20,11 +21,13 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		MobclickAgent.onResume(this);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 
 	/**

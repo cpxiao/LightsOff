@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,8 +23,8 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 	private int mLevel;
 	private int mMoves;
 
-	private ImageView mRestart;
-	private ImageView mMenu;
+	private Button mRestart;
+	private Button mMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +52,10 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 
 		initGameView();
 
-		mRestart = (ImageView) findViewById(R.id.btn_restart);
+		mRestart = (Button) findViewById(R.id.btn_restart);
 		mRestart.setOnClickListener(this);
 
-		mMenu = (ImageView) findViewById(R.id.btn_menu);
+		mMenu = (Button) findViewById(R.id.btn_menu);
 		mMenu.setOnClickListener(this);
 	}
 

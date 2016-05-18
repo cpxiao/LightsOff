@@ -57,18 +57,20 @@
 		android:gravity="center"
 		android:orientation="horizontal">
 
-		<ImageView
+		<Button
 			android:id="@+id/btn_restart"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
 			android:padding="10dp"
-			android:src="@mipmap/app_icon"/>
+			android:text="@string/btn_restart"/>
 
-		<ImageView
+		<Button
 			android:id="@+id/btn_menu"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
+			android:layout_margin="10dp"
 			android:padding="10dp"
-			android:src="@mipmap/app_icon"/>
+			android:text="@string/btn_menu"/>
 	</LinearLayout>
 </LinearLayout>
