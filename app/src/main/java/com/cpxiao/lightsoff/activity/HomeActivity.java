@@ -18,6 +18,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 		findViewById(R.id.btn_menu).setOnClickListener(this);
 		findViewById(R.id.btn_options).setOnClickListener(this);
 
+		int level = PreferencesUtils.getInt(this, ExtraKey.KEY_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
+		GameActivity.comeToMe(this, level);
 	}
 
 	@Override
@@ -25,7 +27,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 		int id = v.getId();
 		int level = PreferencesUtils.getInt(this, ExtraKey.KEY_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
 		if (id == R.id.btn_play) {
-			level=100;
 			GameActivity.comeToMe(this, level);
 		} else if (id == R.id.btn_menu) {
 			MenuActivity.comeToMe(this, level);

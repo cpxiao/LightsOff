@@ -44,7 +44,7 @@
 			android:value="573c30fce0f55a35a4001e31"/>
 		<meta-data
 			android:name="UMENG_CHANNEL"
-			android:value="common"/>
+			android:value="${UMENG_CHANNEL_VALUE}"/>
 
 	</application>
 
