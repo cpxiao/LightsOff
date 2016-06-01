@@ -32,18 +32,12 @@
 		android:layout_height="wrap_content"
 		android:text="@string/btn_play"/>
 
-	<Button
-		android:id="@+id/btn_menu"
-		android:layout_width="150dp"
-		android:layout_height="wrap_content"
-		android:text="@string/btn_menu"/>
 
 	<Button
 		android:id="@+id/btn_options"
 		android:layout_width="150dp"
 		android:layout_height="wrap_content"
-		android:text="@string/btn_options"
-		android:visibility="gone"/>
+		android:text="@string/btn_options"/>
 
 
 </LinearLayout>

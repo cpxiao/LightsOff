@@ -27,9 +27,6 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
 		TextView mLevelView = (TextView) findViewById(R.id.level);
 		mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
 
-		if (mLevel <= 0) {
-			mLevel = 1;
-		}
 		mLevelView.setText(formatLevel(getApplicationContext(), mLevel));
 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.layout_result);
@@ -46,5 +43,6 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
 	@Override
 	public void onClick(View v) {
 		GameActivity.comeToMe(this, mLevel);
+		finish();
 	}
 }

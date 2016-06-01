@@ -8,12 +8,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cpxiao.commonlibrary.utils.PreferencesUtils;
 import com.cpxiao.lightsoff.Data;
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.OnGameListener;
 import com.cpxiao.lightsoff.R;
 import com.cpxiao.lightsoff.views.GameView;
-import com.cpxiao.utils.PreferencesUtils;
 
 public class GameActivity extends BaseActivity implements OnGameListener, View.OnClickListener {
 	private TextView mLevelView;
@@ -23,8 +23,8 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 	private int mLevel;
 	private int mMoves;
 
-	private Button mRestart;
-	private Button mMenu;
+	private Button mBtnRestart;
+	private Button mBtnHome;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +52,11 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 
 		initGameView();
 
-		mRestart = (Button) findViewById(R.id.btn_restart);
-		mRestart.setOnClickListener(this);
+		mBtnRestart = (Button) findViewById(R.id.btn_restart);
+		mBtnRestart.setOnClickListener(this);
 
-		mMenu = (Button) findViewById(R.id.btn_menu);
-		mMenu.setOnClickListener(this);
+		mBtnHome = (Button) findViewById(R.id.btn_home);
+		mBtnHome.setOnClickListener(this);
 	}
 
 	private void initGameView() {
@@ -73,7 +73,7 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 			mMovesView.setVisibility(View.GONE);
 			TextView view = new TextView(this);
 			view.setTextSize(60);
-			view.setText("恭喜你，已完成全部关卡！\n敬请期待");
+			view.setText(R.string.all_success);
 			layout.addView(view);
 		} else {
 			mBestView.setVisibility(View.VISIBLE);
@@ -96,6 +96,7 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 		mLevel++;
 		PreferencesUtils.putInt(GameActivity.this, ExtraKey.KEY_LEVEL, mLevel);
 		ResultActivity.comeToMe(GameActivity.this, mLevel);
+		finish();
 	}
 
 	@Override
@@ -116,8 +117,8 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 		int id = v.getId();
 		if (id == R.id.btn_restart) {
 			GameActivity.comeToMe(this, mLevel);
-		} else if (id == R.id.btn_menu) {
-			MenuActivity.comeToMe(this, mLevel);
+		} else if (id == R.id.btn_home) {
+			HomeActivity.comeToMe(this);
 		}
 	}
 }

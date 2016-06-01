@@ -27,10 +27,6 @@
 			android:screenOrientation="portrait">
 		</activity>
 		<activity
-			android:name=".activity.MenuActivity"
-			android:screenOrientation="portrait">
-		</activity>
-		<activity
 			android:name=".activity.OptionsActivity"
 			android:screenOrientation="portrait">
 		</activity>

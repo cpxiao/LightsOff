@@ -1,1 +1,7 @@
 include ':app'
+//include '..:Utils:commonlibrary'
+
+
+include ':Utils'
+project (':Utils').projectDir = new File('../Utils/')
+include ':Utils:commonlibrary'

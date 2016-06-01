@@ -41,6 +41,6 @@ public class BaseActivity extends Activity {
 		if (level <= 0) {
 			level = 1;
 		}
-		return context.getString(R.string.label_level_format) + (level / 16 + 1) + "-" + level % 16;
+		return context.getString(R.string.label_level_format) + level;
 	}
 }

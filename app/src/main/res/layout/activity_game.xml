@@ -66,11 +66,11 @@
 			android:text="@string/btn_restart"/>
 
 		<Button
-			android:id="@+id/btn_menu"
+			android:id="@+id/btn_home"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_margin="10dp"
 			android:padding="10dp"
-			android:text="@string/btn_menu"/>
+			android:text="@string/btn_home"/>
 	</LinearLayout>
 </LinearLayout>
