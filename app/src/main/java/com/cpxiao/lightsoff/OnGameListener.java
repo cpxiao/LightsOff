@@ -5,8 +5,20 @@ package com.cpxiao.lightsoff;
  * OnGameListener
  */
 public interface OnGameListener {
+    /**
+     * 游戏成功
+     */
+    void onGameSuccess();
 
-	void onGameSuccess();
+    /**
+     * 步数改变
+     *
+     * @param steps 步数
+     */
+    void onStepsChange(int steps);
 
-	void onMovesChange(int moves);
+    /**
+     * 游戏结束
+     */
+    void onGameOver();
 }

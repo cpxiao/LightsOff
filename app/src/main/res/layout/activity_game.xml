@@ -1,76 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@color/background_activity"
-	android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_activity"
+    android:orientation="vertical">
 
-	<TextView
-		android:id="@+id/level"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:padding="10dp"
-		android:text="@string/label_level_format"
-		android:textColor="@color/text_color_white"
-		android:textSize="32sp"
-		android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/label_level"
+        android:textColor="@color/text_color_white"
+        android:textSize="32sp"
+        android:textStyle="bold"/>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
 
-		<TextView
-			android:id="@+id/moves"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:padding="10dp"
-			android:text="@string/label_moves"
-			android:textColor="@color/text_color_white"
-			android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/moves"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/remaining_steps"
+            android:textColor="@color/text_color_white"
+            android:textSize="18sp"/>
 
-		<TextView
-			android:id="@+id/best"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:padding="10dp"
-			android:text="@string/label_best"
-			android:textColor="@color/text_color_white"
-			android:textSize="18sp"/>
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:id="@+id/layout_game"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/layout_game"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-	</LinearLayout>
+    </LinearLayout>
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-		<Button
-			android:id="@+id/btn_restart"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
-			android:padding="10dp"
-			android:text="@string/btn_restart"/>
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="@string/btn_restart"/>
 
-		<Button
-			android:id="@+id/btn_home"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_margin="10dp"
-			android:padding="10dp"
-			android:text="@string/btn_home"/>
-	</LinearLayout>
+        <Button
+            android:id="@+id/btn_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:text="@string/btn_home"/>
+    </LinearLayout>
+
+    <include layout="@layout/ads_layout"/>
 </LinearLayout>

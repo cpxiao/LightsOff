@@ -16,33 +16,38 @@ import com.cpxiao.lightsoff.R;
  */
 public class ResultActivity extends BaseActivity implements View.OnClickListener {
 
-	private int mLevel;
+    private int mLevel;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_result);
+        setContentView(R.layout.activity_result);
 
-		TextView mLevelView = (TextView) findViewById(R.id.level);
-		mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
+        initWidget();
+        initAds("1618817068448912_1619268745070411");
+    }
 
-		mLevelView.setText(formatLevel(getApplicationContext(), mLevel));
+    private void initWidget() {
+        TextView mLevelView = (TextView) findViewById(R.id.level);
+        mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.layout_result);
-		layout.setOnClickListener(this);
-	}
+        mLevelView.setText("" + mLevel);
 
-	public static void comeToMe(Context context, int level) {
-		Intent intent = new Intent(context, ResultActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		intent.putExtra(ExtraKey.INTENT_EXTRA_LEVEL, level);
-		context.startActivity(intent);
-	}
+        LinearLayout layout = (LinearLayout) findViewById(R.id.layout_result);
+        layout.setOnClickListener(this);
+    }
 
-	@Override
-	public void onClick(View v) {
-		GameActivity.comeToMe(this, mLevel);
-		finish();
-	}
+    public static void comeToMe(Context context, int level) {
+        Intent intent = new Intent(context, ResultActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(ExtraKey.INTENT_EXTRA_LEVEL, level);
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        GameActivity.comeToMe(this, mLevel);
+        finish();
+    }
 }
