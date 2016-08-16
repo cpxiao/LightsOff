@@ -12,7 +12,6 @@
 	<string name="btn_restart">Restart</string>
 	<string name="btn_options">Options</string>
 	<string name="btn_quit">Quit</string>
-	<string name="all_success">恭喜你，已完成全部关卡！\n敬请期待</string>
-
+	<string name="message">You Win !</string>
 
 </resources>

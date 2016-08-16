@@ -12,6 +12,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cpxiao.commonlibrary.utils.PreferencesUtils;
+import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.OnGameListener;
 import com.cpxiao.lightsoff.R;
 
@@ -95,6 +97,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     private void init(final int x, final int y, final int moves, String store) {
         if (store == null) {
             init(x, y, moves);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
             return;
         }
         mX = x;

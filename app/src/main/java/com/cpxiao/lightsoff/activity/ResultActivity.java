@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.R;
@@ -15,8 +14,6 @@ import com.cpxiao.lightsoff.R;
  * ResultActivity
  */
 public class ResultActivity extends BaseActivity implements View.OnClickListener {
-
-    private int mLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +26,6 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initWidget() {
-        TextView mLevelView = (TextView) findViewById(R.id.level);
-        mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
-
-        mLevelView.setText("" + mLevel);
-
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout_result);
         layout.setOnClickListener(this);
     }
@@ -47,6 +39,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        int mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
         GameActivity.comeToMe(this, mLevel);
         finish();
     }

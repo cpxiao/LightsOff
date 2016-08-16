@@ -53,28 +53,32 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 
     private void initGameView() {
         LinearLayout layout = (LinearLayout) findViewById(R.id.layout_game);
-
+        GameView view;
         String[] data = Data.getData(mLevel);
         if (data == null) {
-            mLevelView.setVisibility(View.GONE);
-            mRemainingStepsView.setVisibility(View.GONE);
-            TextView view = new TextView(this);
-            view.setTextSize(60);
-            view.setText(R.string.all_success);
-            layout.addView(view);
+
+            if (mLevel < 20) {
+                view = new GameView(this, 4, 5, 6, null);
+            } else if (mLevel < 40) {
+                view = new GameView(this, 4, 5, 8, null);
+            } else if (mLevel < 60) {
+                view = new GameView(this, 4, 6, 6, null);
+            } else if (mLevel < 80) {
+                view = new GameView(this, 4, 6, 8, null);
+            } else if (mLevel < 100) {
+                view = new GameView(this, 4, 6, 6, null);
+            } else {
+                view = new GameView(this, 5, 6, 8, null);
+            }
         } else {
-            mLevelView.setVisibility(View.VISIBLE);
-            mRemainingStepsView.setVisibility(View.VISIBLE);
             int x = Data.getX(data);
             int y = Data.getY(data);
             int moves = Data.getMoves(data);
             String store = Data.getStore(data);
-
-            GameView view = new GameView(this, x, y, moves, store);
-
-            view.setOnGameListener(this);
-            layout.addView(view);
+            view = new GameView(this, x, y, moves, store);
         }
+        view.setOnGameListener(this);
+        layout.addView(view);
     }
 
 

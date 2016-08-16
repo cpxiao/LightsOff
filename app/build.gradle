@@ -28,7 +28,7 @@ android {
 
 	productFlavors {
 		youmi{}
-		googleplay {}
+		gp_fb {}
 		anzhi {}
 		wandoujia{}
 	}
