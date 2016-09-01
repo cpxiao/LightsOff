@@ -4,11 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.cpxiao.minigamelib.activity.BaseActivity;
+
 /**
  * Created by cpxiao on 5/17/16.
- * OptionsActivity
+ * SettingsActivity
  */
-public class OptionsActivity extends BaseActivity {
+public class SettingsActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +19,7 @@ public class OptionsActivity extends BaseActivity {
 	}
 
 	public static void comeToMe(Context context) {
-		Intent intent = new Intent(context, OptionsActivity.class);
+		Intent intent = new Intent(context, SettingsActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		context.startActivity(intent);
 	}

@@ -14,6 +14,7 @@ import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.OnGameListener;
 import com.cpxiao.lightsoff.R;
 import com.cpxiao.lightsoff.views.GameView;
+import com.cpxiao.minigamelib.activity.BaseActivity;
 
 public class GameActivity extends BaseActivity implements OnGameListener, View.OnClickListener {
     private TextView mLevelView;
@@ -31,7 +32,7 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
         mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
 
         initWidget();
-        initAds("1618817068448912_1618817468448872");
+        initSmallAds("1618817068448912_1618817468448872");
     }
 
     private void initWidget() {

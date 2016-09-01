@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">关灯游戏</string>
+
+    <string name="label_moves">点击次数：</string>
+    <string name="remaining_steps">剩余次数：</string>
+    <string name="label_level">关卡:</string>
+
+    <string name="tap_to_continue">点击屏幕继续</string>
+    <string name="message">恭喜，你赢了！</string>
+</resources>

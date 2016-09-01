@@ -8,6 +8,7 @@ import android.view.View;
 import com.cpxiao.commonlibrary.utils.PreferencesUtils;
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.R;
+import com.cpxiao.minigamelib.activity.BaseActivity;
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
@@ -18,12 +19,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
 
         initWidget();
-        initAds("1618817068448912_1618817565115529");
+        initSmallAds("1618817068448912_1618817565115529");
     }
 
     private void initWidget() {
         findViewById(R.id.btn_play).setOnClickListener(this);
-        findViewById(R.id.btn_options).setOnClickListener(this);
+        findViewById(R.id.btn_settings).setOnClickListener(this);
         findViewById(R.id.btn_quit).setOnClickListener(this);
     }
 
@@ -33,8 +34,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         if (id == R.id.btn_play) {
             int level = PreferencesUtils.getInt(this, ExtraKey.KEY_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
             GameActivity.comeToMe(this, level);
-        } else if (id == R.id.btn_options) {
-            OptionsActivity.comeToMe(this);
+        } else if (id == R.id.btn_settings) {
+            SettingsActivity.comeToMe(this);
         } else if (id == R.id.btn_quit) {
             finish();
         }

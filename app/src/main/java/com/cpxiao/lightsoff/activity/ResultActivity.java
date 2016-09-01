@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.R;
+import com.cpxiao.minigamelib.activity.BaseActivity;
 
 /**
  * Created by cpxiao on 5/16/16.
@@ -22,7 +23,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_result);
 
         initWidget();
-        initAds("1618817068448912_1619268745070411");
+        initSmallAds("1618817068448912_1619268745070411");
     }
 
     private void initWidget() {

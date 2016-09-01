@@ -37,11 +37,11 @@
 
         <Button
             android:textColor="#ffffff"
-            android:id="@+id/btn_options"
+            android:id="@+id/btn_settings"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@string/btn_options"/>
+            android:text="@string/btn_settings"/>
         <Button
             android:textColor="#ffffff"
             android:id="@+id/btn_quit"
