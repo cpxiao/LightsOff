@@ -1,4 +1,4 @@
-package com.cpxiao.lightsoff;//package com.cpxiao.minigame.library;
+package com.cpxiao.lightsoff;
 
 /**
  * Config

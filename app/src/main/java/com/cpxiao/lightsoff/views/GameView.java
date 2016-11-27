@@ -10,9 +10,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.cpxiao.androidutils.library.utils.PreferencesUtils;
+import com.cpxiao.lightsoff.Config;
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.OnGameListener;
 import com.cpxiao.lightsoff.R;
@@ -26,8 +26,10 @@ import java.util.Random;
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
     private static final String TAG = GameView.class.getSimpleName();
+    private static final boolean DEBUG = Config.DEBUG;
+
     private SurfaceHolder mSurfaceHolder;
-    private int mX, mY;
+    private int mXCount, mYCount;
     private int[][] mStore;
 
     private int mMoves = 0;
@@ -72,50 +74,52 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
         mPaintLightOff.setColor(Color.BLACK);
     }
 
-    public GameView(Context context, int x, int y, int moves, String store) {
+    public GameView(Context context, int xCount, int yCount, int moves, String store) {
         this(context);
-        init(x, y, moves, store);
+        init(xCount, yCount, moves, store);
     }
 
-    private void init(final int x, final int y, final int moves) {
-        mX = x;
-        mY = y;
+    private void init(final int xCount, final int yCount, final int moves) {
+        mXCount = xCount;
+        mYCount = yCount;
         if (moves < 0) {
-            throw new IllegalArgumentException("moves number error!");
+            if (DEBUG) {
+                throw new IllegalArgumentException("moves number error!");
+            }
         }
-        mStore = new int[y][x];
-        for (int indexY = 0; indexY < x; indexY++) {
-            for (int indexX = 0; indexX < x; indexX++) {
+        mStore = new int[yCount][xCount];
+        for (int indexY = 0; indexY < xCount; indexY++) {
+            for (int indexX = 0; indexX < xCount; indexX++) {
                 mStore[indexY][indexX] = 0;
             }
         }
         Random random = new Random();
         for (int i = 0; i < moves; i++) {
-            updateStore(random.nextInt(x), random.nextInt(y));
+            updateStore(random.nextInt(xCount), random.nextInt(yCount));
         }
     }
 
-    private void init(final int x, final int y, final int moves, String store) {
+    private void init(final int xCount, final int yCount, final int moves, String store) {
         if (store == null) {
-            init(x, y, moves);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, x);
+            init(xCount, yCount, moves);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
             return;
         }
-        mX = x;
-        mY = y;
-        if (store.length() != x * y) {
+        mXCount = xCount;
+        mYCount = yCount;
+        if (store.length() != xCount * yCount) {
             throw new IllegalArgumentException("store number error!");
         }
 
-        mStore = new int[y][x];
+        mStore = new int[yCount][xCount];
         int indexX;
         int indexY;
         for (int i = 0; i < store.length(); i++) {
-            indexX = i % x;
-            indexY = i / x;
+            indexX = i % xCount;
+            indexY = i / xCount;
             mStore[indexY][indexX] = store.charAt(i) == '1' ? 1 : 0;
         }
     }
@@ -140,8 +144,8 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     }
 
     private void drawLights(Canvas canvas) {
-        for (int y = 0; y < mY; y++) {
-            for (int x = 0; x < mX; x++) {
+        for (int y = 0; y < mYCount; y++) {
+            for (int x = 0; x < mXCount; x++) {
                 int cx = mPaddingLR + mItemWidth / 2 + mItemWidth * x;
                 int cy = mPaddingTB + mItemHeight / 2 + mItemHeight * y;
 
@@ -173,12 +177,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        Log.d(TAG, "surfaceChanged()..............");
+        if (DEBUG) {
+            Log.d(TAG, "surfaceChanged()..............");
+        }
         mViewWidth = width;
         mViewHeight = height;
-        mItemWidth = width / mX;
-        mItemHeight = height / mX;
-        mItemRadius = (int) (Math.min(width, height) / mX * 0.4 * GOLDEN_RATIO);
+        mItemWidth = width / mXCount;
+        mItemHeight = height / mXCount;
+        mItemRadius = (int) (Math.min(width, height) / mXCount * 0.4 * GOLDEN_RATIO);
 
         /**
          * 若需要居中，则重置相关值
@@ -211,7 +217,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
             /**
              * 非电灯区域，不处理
              */
-            if (tmpX < 0 || tmpX > mX * mItemWidth || tmpY < 0 || tmpY > mX * mItemHeight) {
+            if (tmpX < 0 || tmpX > mXCount * mItemWidth || tmpY < 0 || tmpY > mXCount * mItemHeight) {
                 return true;
             }
 
@@ -229,14 +235,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
                 if (mOnGameListener != null) {
                     mOnGameListener.onGameSuccess();
                 }
-                Toast.makeText(getContext(), "You Win!", Toast.LENGTH_LONG).show();
             }
         }
         return true;
     }
 
     private boolean checkArguments() {
-        if (mX <= 0 || mY <= 0) {
+        if (mXCount <= 0 || mYCount <= 0) {
             throw new IllegalArgumentException();
         }
         if (mStore == null) {
@@ -258,15 +263,15 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     }
 
     private void changeItem(int indexX, int indexY) {
-        if (indexX < 0 || indexX >= mX || indexY < 0 || indexY >= mX) {
+        if (indexX < 0 || indexX >= mXCount || indexY < 0 || indexY >= mXCount) {
             return;
         }
         mStore[indexY][indexX] = mStore[indexY][indexX] == 1 ? 0 : 1;
     }
 
     private boolean isSuccess() {
-        for (int y = 0; y < mX; y++) {
-            for (int x = 0; x < mX; x++) {
+        for (int y = 0; y < mXCount; y++) {
+            for (int x = 0; x < mXCount; x++) {
                 if (mStore[y][x] == 1) {
                     return false;
                 }

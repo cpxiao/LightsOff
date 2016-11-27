@@ -19,7 +19,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public abstract class ZBaseAd implements Advertisement {
 
-
     protected static final boolean DEBUG = Config.DEBUG;
 
     /**
@@ -45,6 +44,12 @@ public abstract class ZBaseAd implements Advertisement {
      * 是否正在加载
      */
     protected AtomicBoolean mLoading = new AtomicBoolean(false);
+
+    /**
+     * 最后一次请求开始的时间，用于判断请求超时防止某些广告如fb长时间无广告回调
+     */
+    protected long mLastLoadStart;
+    protected long TimeFromLastLoadStart = 60000;//毫秒
 
     /**
      * 最后使用的广告View

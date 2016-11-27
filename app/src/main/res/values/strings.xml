@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">Lights Off</string>
+    <string name="app_name">Lights Off</string>
 
-	<string name="label_moves">Moves:</string>
-	<string name="remaining_steps">Remaining steps:</string>
-	<string name="label_level">Level:</string>
+    <string name="label_moves">Moves:</string>
+    <string name="remaining_steps">Remaining steps:</string>
+    <string name="label_level">Level:</string>
 
-	<string name="tap_to_continue">Tap to continue</string>
-	<string name="message">You Win !</string>
+    <string name="tap_to_continue">Tap to continue</string>
+    <string name="you_win">You Win !</string>
 
-	<string name="btn_quit">Quit</string>
+    <string name="btn_quit">Quit</string>
 
-	<string name="btn_restart">Restart</string>
-	<string name="btn_play">Play</string>
-	<string name="btn_home">Home</string>
+    <string name="btn_restart">Restart</string>
+    <string name="btn_play">Play</string>
+    <string name="btn_home">Home</string>
 
 </resources>

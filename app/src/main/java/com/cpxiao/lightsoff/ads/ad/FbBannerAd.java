@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import com.cpxiao.lightsoff.ads.core.Advertisement;
 import com.cpxiao.lightsoff.ads.core.Advertiser;
 import com.cpxiao.lightsoff.ads.core.ZAdSize;
-import com.cpxiao.lightsoff.Config;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdListener;
@@ -20,6 +19,8 @@ import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -28,8 +29,6 @@ import java.util.Queue;
 
 public class FbBannerAd extends ZBaseAd {
     private static final String TAG = "FbBannerAd";
-    private static final boolean DEBUG = Config.DEBUG;
-
 
     private AdView mAdManager;
     private View mLastView;
@@ -43,7 +42,7 @@ public class FbBannerAd extends ZBaseAd {
     @Override
     public View getLastView() {
         if (!hasAd()) {
-            return mLastView;
+            return getLastAdView();
         } else {
             //先把上一次view释放掉
             destroyLastView();
@@ -118,7 +117,10 @@ public class FbBannerAd extends ZBaseAd {
             }
         });
         if (DEBUG) {
-            AdSettings.addTestDevice("e2aec15df12cd8b4571af5f1275a34ec");//htc
+            List<String> testDevices = new ArrayList<>();
+            testDevices.add("e2aec15df12cd8b4571af5f1275a34ec");//htc native?
+            testDevices.add("55c4f301d7c1183f1fa6ede6b3f2fe2e");//坚果 native?
+            AdSettings.addTestDevices(testDevices);
         }
         mAdManager.loadAd();
     }

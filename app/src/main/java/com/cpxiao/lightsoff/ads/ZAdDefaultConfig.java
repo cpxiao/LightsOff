@@ -34,7 +34,7 @@ public class ZAdDefaultConfig {
         ad0.adSize = ZAdSize.BANNER_320X50;
         ad0.adCacheCount = 3;
         ad0.adCacheTime = 180;
-        //        adList0.add(ad0);
+        adList0.add(ad0);
         Advertiser ad0_1 = new Advertiser();
         ad0_1.advertiser = ZAdType.AD_FB;
         ad0_1.publishId = "";
@@ -42,7 +42,7 @@ public class ZAdDefaultConfig {
         ad0_1.adSize = ZAdSize.BANNER_300X250;
         ad0_1.adCacheCount = 3;
         ad0_1.adCacheTime = 180;
-        adList0.add(ad0_1);
+        //        adList0.add(ad0_1);
         arr.put(ZAdPosition.POSITION_HOME_ACTIVITY, adList0);
 
         //Game Activity

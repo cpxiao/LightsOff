@@ -29,7 +29,7 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
-        initSmallAds(getApplicationContext(), ZAdPosition.POSITION_RESULT_ACTIVITY);
+        initAds(getApplicationContext(), ZAdPosition.POSITION_RESULT_ACTIVITY);
     }
 
     private void initWidget() {

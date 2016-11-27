@@ -50,22 +50,26 @@
         android:orientation="horizontal">
 
         <Button
-            android:textColor="#ffffff"
-            android:id="@+id/btn_restart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:text="@string/btn_restart"/>
-
-        <Button
-            android:textColor="#ffffff"
             android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:background="@drawable/btn_home"
             android:padding="10dp"
-            android:text="@string/btn_home"/>
+            android:text="@string/btn_home"
+            android:textColor="#ffffff"/>
+
+        <Button
+            android:id="@+id/btn_restart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/btn_home"
+            android:padding="10dp"
+            android:text="@string/btn_restart"
+            android:textColor="#ffffff"/>
+
+
     </LinearLayout>
 
     <include layout="@layout/layout_ads"/>

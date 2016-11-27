@@ -24,25 +24,25 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_home);
 
         initWidget();
-
+        //        initAds(getApplicationContext(), "1618817068448912_1618817468448872");
         ZAdManager.getInstance().init(getApplicationContext());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initSmallAds(getApplicationContext(), ZAdPosition.POSITION_HOME_ACTIVITY);
+        initAds(getApplicationContext(), ZAdPosition.POSITION_HOME_ACTIVITY);
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         ZAdManager.getInstance().destroyAll();
+        super.onDestroy();
+        System.gc();
     }
 
     private void initWidget() {
         findViewById(R.id.btn_play).setOnClickListener(this);
-        findViewById(R.id.btn_settings).setOnClickListener(this);
         findViewById(R.id.btn_quit).setOnClickListener(this);
     }
 

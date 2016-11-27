@@ -43,7 +43,7 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
     @Override
     protected void onResume() {
         super.onResume();
-        initSmallAds(getApplicationContext(), ZAdPosition.POSITION_GAME_ACTIVITY);
+        initAds(getApplicationContext(), ZAdPosition.POSITION_GAME_ACTIVITY);
     }
 
     private void initWidget() {

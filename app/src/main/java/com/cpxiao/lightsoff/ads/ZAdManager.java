@@ -18,7 +18,6 @@ import com.cpxiao.lightsoff.ads.utils.UMeng;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.cpxiao.lightsoff.ads.core.ZAdPosition.POSITION_GAME_ACTIVITY;
 import static com.cpxiao.lightsoff.ads.core.ZAdPosition.POSITION_HOME_ACTIVITY;
@@ -30,7 +29,7 @@ import static com.cpxiao.lightsoff.ads.core.ZAdPosition.POSITION_RESULT_ACTIVITY
  */
 public class ZAdManager {
 
-    public static final String TAG = ZAdManager.class.getSimpleName();
+    private static final String TAG = ZAdManager.class.getSimpleName();
     private static final boolean DEBUG = Config.DEBUG;
 
     //广告配置数据
@@ -39,9 +38,6 @@ public class ZAdManager {
     //成功获取广告的list
     private ArrayMap<Integer, Advertisement> mViewArrayMap = null;
     private ArrayMap<Integer, Boolean> mLoadingArrayMap = null;
-
-    //是否正在请求服务器广告位置配置信息
-    private AtomicBoolean mRequesting = new AtomicBoolean(false);
 
     /**
      * “双重检查锁”--兼顾线程安全和效率的单例写法，注意关键字volatile
@@ -66,20 +62,11 @@ public class ZAdManager {
     }
 
     public void init(final Context context) {
-        //fb的原生广告在无vpn的时候不会回调成功或失败，在此处new，防止
+        //有些广告(如：fb的原生广告)在无vpn的时候不会回调广告成功或失败，在此处new ArrayMap，防止一直卡在loading状态
         mViewArrayMap = new ArrayMap<>();
         mLoadingArrayMap = new ArrayMap<>();
 
-        if (mRequesting.get()) {
-            if (DEBUG) {
-                Log.d(TAG, "初始化配置正在进行中！");
-            }
-            return;
-        }
-        mRequesting.set(true);
-
         mListArrayMap = ZAdDefaultConfig.getDefaultConfig();
-        mRequesting.set(false);
         ThreadUtils.getInstance().runOnMainThread(new Runnable() {
             @Override
             public void run() {
@@ -100,19 +87,23 @@ public class ZAdManager {
     public View getAd(Context appCxt, int position) {
         if (appCxt == null || mViewArrayMap == null) {
             if (DEBUG) {
-                //                throw new IllegalArgumentException("error! appCxt == null || mViewArrayMap == null");
+                throw new IllegalArgumentException("error! appCxt == null || mViewArrayMap == null");
             }
             return null;
         }
         Advertisement advertisement = mViewArrayMap.get(position);
-        //1)获取广告
         View adView = null;
-        if (advertisement != null && advertisement.hasAd()) {
+        //1)先获取广告
+        if (advertisement != null) {
+            if (advertisement.hasAd()) {
+                //有缓存广告才发送友盟统计，防止无广告时获取最后一次使用过的广告重复发送统计
+                UMeng.postStat(appCxt, UMeng.SDK_AD_IMPRESSION, advertisement.toString() + position);
+            }
+            //获取缓存广告或者最后一次使用过的广告
             adView = advertisement.getLastView();
-            UMeng.postStat(appCxt, UMeng.SDK_AD_IMPRESSION, advertisement.toString() + position);
         }
 
-        //2)判断是否要加载
+        //2)判断是否还有广告缓存，无广告就加载
         if (advertisement == null || !advertisement.hasAd()) {
             if (DEBUG) {
                 Log.d(TAG, "无广告缓存View，开始请求广告");

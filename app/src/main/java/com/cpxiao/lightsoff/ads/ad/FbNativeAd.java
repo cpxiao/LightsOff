@@ -1,13 +1,13 @@
 package com.cpxiao.lightsoff.ads.ad;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.cpxiao.lightsoff.Config;
 import com.cpxiao.lightsoff.R;
 import com.cpxiao.lightsoff.ads.core.Advertisement;
 import com.cpxiao.lightsoff.ads.core.Advertiser;
@@ -17,6 +17,8 @@ import com.facebook.ads.AdSettings;
 import com.facebook.ads.NativeAd;
 import com.facebook.ads.NativeAdsManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
 
 /**
@@ -25,7 +27,6 @@ import java.util.Queue;
  */
 
 public class FbNativeAd extends ZBaseAd {
-    private static final boolean DEBUG = Config.DEBUG;
     private static final String TAG = "FbNativeAd";
 
     private NativeAdsManager mManager;
@@ -45,13 +46,14 @@ public class FbNativeAd extends ZBaseAd {
             return;
         }
 
-        if (mLoading.get()) {
+        if (mLoading.get() && Math.abs(System.currentTimeMillis() - mLastGetAdTimeMillis) < TimeFromLastLoadStart) {
             if (DEBUG) {
                 Log.d(TAG, "ad is loading! mPlaceId = " + mPlaceId);
             }
 
             return;
         }
+        mLastGetAdTimeMillis = System.currentTimeMillis();
         mLoading.set(true);
 
         if (DEBUG) {
@@ -64,7 +66,7 @@ public class FbNativeAd extends ZBaseAd {
             public void onAdsLoaded() {
                 if (DEBUG) {
                     if (mManager != null) {
-                        Log.d(TAG, "onNativeAdsLoaded: mPlaceId = " + mPlaceId + ", list.size() = " + mManager.getUniqueNativeAdCount());
+                        Log.d(TAG, "onAdsLoaded: mPlaceId = " + mPlaceId + ", list.size() = " + mManager.getUniqueNativeAdCount());
                     }
                 }
                 mLoading.set(false);
@@ -88,24 +90,25 @@ public class FbNativeAd extends ZBaseAd {
 
             @Override
             public void onAdError(AdError adError) {
+                String msg = "onAdError: mPlaceId = " + mPlaceId + ", getErrorCode = " + adError.getErrorCode() + ", getErrorMessage = " + adError.getErrorMessage();
                 if (DEBUG) {
-                    Log.d(TAG, "onNativeAdFailed: mPlaceId = " + mPlaceId + ", " + adError.getErrorMessage());
+                    Log.d(TAG, msg);
                 }
                 mLoading.set(false);
-                onLoadZAdFail(get(), adError.getErrorMessage(), next);
+                onLoadZAdFail(get(), msg, next);
 
             }
         });
         if (DEBUG) {
-            //            AdSettings.addTestDevice("cb0c8a003984d4e58e122ee73e0b4f1d");//htc
-            //            AdSettings.addTestDevice("e2aec15df12cd8b4571af5f1275a34ec");//htc native?
-            AdSettings.addTestDevice("55c4f301d7c1183f1fa6ede6b3f2fe2e");//坚果 native?
+            List<String> testDevices = new ArrayList<>();
+            testDevices.add("e2aec15df12cd8b4571af5f1275a34ec");//htc native?
+            testDevices.add("55c4f301d7c1183f1fa6ede6b3f2fe2e");//坚果 native?
+            AdSettings.addTestDevices(testDevices);
         }
 
         mManager.loadAds();
 
     }
-
 
 
     @Override
@@ -145,9 +148,9 @@ public class FbNativeAd extends ZBaseAd {
         return TAG;
     }
 
-//    private FbNativeAd get() {
-//        return this;
-//    }
+    //    private FbNativeAd get() {
+    //        return this;
+    //    }
 
 
     private View generateView(Context c, NativeAd ad) {
@@ -173,11 +176,13 @@ public class FbNativeAd extends ZBaseAd {
                 return null;
             }
             ImageView view = new ImageView(c);
+            view.setBackgroundColor(Color.WHITE);
             Glide.with(c).load(picture).into(view);
             view.setTag(R.id.tag_info, ad);
             return view;
         } else {
             ZBannerView view = new ZBannerView(c);
+            view.setBackgroundColor(Color.WHITE);
             view.bindData(c, icon, ad.getAdTitle(), ad.getAdSubtitle());
             view.setTag(R.id.tag_info, ad);
             return view;
