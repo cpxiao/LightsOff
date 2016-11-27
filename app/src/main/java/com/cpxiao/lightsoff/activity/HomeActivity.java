@@ -25,7 +25,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
         initWidget();
         //        initAds(getApplicationContext(), "1618817068448912_1618817468448872");
-        ZAdManager.getInstance().init(getApplicationContext());
     }
 
     @Override
