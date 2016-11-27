@@ -1,8 +1,9 @@
 package com.cpxiao.lightsoff;
 
 /**
- * Created by cpxiao on 5/16/16.
  * ExtraKey
+ *
+ * @author cpxiao on 2016/5/16.
  */
 public class ExtraKey {
 

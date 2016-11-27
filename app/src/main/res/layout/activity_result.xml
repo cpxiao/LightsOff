@@ -29,5 +29,5 @@
         android:text="@string/tap_to_continue"
         android:textSize="24sp"/>
 
-    <include layout="@layout/ads_layout"/>
+    <include layout="@layout/layout_ads"/>
 </LinearLayout>

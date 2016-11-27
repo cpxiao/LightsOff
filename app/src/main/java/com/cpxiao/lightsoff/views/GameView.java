@@ -12,7 +12,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.cpxiao.commonlibrary.utils.PreferencesUtils;
+import com.cpxiao.androidutils.library.utils.PreferencesUtils;
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.OnGameListener;
 import com.cpxiao.lightsoff.R;
@@ -20,8 +20,9 @@ import com.cpxiao.lightsoff.R;
 import java.util.Random;
 
 /**
- * Created by cpxiao on 5/15/16.
  * GameView
+ *
+ * @author cpxiao on 2016/5/15.
  */
 public class GameView extends SurfaceView implements SurfaceHolder.Callback, View.OnTouchListener {
     private static final String TAG = GameView.class.getSimpleName();
@@ -129,7 +130,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     private void myDraw() {
         Canvas canvas = mSurfaceHolder.lockCanvas();
 
-//		canvas.drawColor(Color.WHITE);
+        //		canvas.drawColor(Color.WHITE);
         canvas.drawColor(ContextCompat.getColor(getContext(), R.color.background_activity));
         drawLights(canvas);
         canvas.drawText("a", 0, 0, new Paint());

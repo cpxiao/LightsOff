@@ -68,5 +68,5 @@
             android:text="@string/btn_home"/>
     </LinearLayout>
 
-    <include layout="@layout/ads_layout"/>
+    <include layout="@layout/layout_ads"/>
 </LinearLayout>

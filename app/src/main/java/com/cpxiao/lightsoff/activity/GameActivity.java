@@ -8,14 +8,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cpxiao.commonlibrary.utils.PreferencesUtils;
+import com.cpxiao.androidutils.library.utils.PreferencesUtils;
 import com.cpxiao.lightsoff.Data;
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.OnGameListener;
 import com.cpxiao.lightsoff.R;
+import com.cpxiao.lightsoff.ads.core.ZAdPosition;
 import com.cpxiao.lightsoff.views.GameView;
-import com.cpxiao.minigamelib.activity.BaseActivity;
 
+
+/**
+ * GameActivity
+ *
+ * @author cpxiao on 2016/5/16.
+ */
 public class GameActivity extends BaseActivity implements OnGameListener, View.OnClickListener {
     private TextView mLevelView;
     private TextView mRemainingStepsView;
@@ -32,7 +38,12 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
         mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
 
         initWidget();
-        initSmallAds("1618817068448912_1618817468448872");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initSmallAds(getApplicationContext(), ZAdPosition.POSITION_GAME_ACTIVITY);
     }
 
     private void initWidget() {

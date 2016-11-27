@@ -1,8 +1,9 @@
 package com.cpxiao.lightsoff;
 
 /**
- * Created by cpxiao on 5/16/16.
  * Data
+ *
+ * @author cpxiao on 2016/5/16.
  */
 public class Data {
 

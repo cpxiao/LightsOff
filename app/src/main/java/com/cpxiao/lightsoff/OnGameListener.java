@@ -1,8 +1,9 @@
 package com.cpxiao.lightsoff;
 
 /**
- * Created by cpxiao on 5/15/16.
  * OnGameListener
+ *
+ * @author cpxiao on 2016/5/15.
  */
 public interface OnGameListener {
     /**

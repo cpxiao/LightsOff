@@ -5,11 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cpxiao.commonlibrary.utils.PreferencesUtils;
+import com.cpxiao.androidutils.library.utils.PreferencesUtils;
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.R;
-import com.cpxiao.minigamelib.activity.BaseActivity;
+import com.cpxiao.lightsoff.ads.ZAdManager;
+import com.cpxiao.lightsoff.ads.core.ZAdPosition;
 
+/**
+ * HomeActivity
+ *
+ * @author cpxiao on 2016/5/16.
+ */
 public class HomeActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
@@ -17,9 +23,21 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
         initWidget();
-        initSmallAds("1618817068448912_1618817565115529");
+
+        ZAdManager.getInstance().init(getApplicationContext());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initSmallAds(getApplicationContext(), ZAdPosition.POSITION_HOME_ACTIVITY);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ZAdManager.getInstance().destroyAll();
     }
 
     private void initWidget() {
@@ -34,8 +52,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         if (id == R.id.btn_play) {
             int level = PreferencesUtils.getInt(this, ExtraKey.KEY_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
             GameActivity.comeToMe(this, level);
-        } else if (id == R.id.btn_settings) {
-            SettingsActivity.comeToMe(this);
         } else if (id == R.id.btn_quit) {
             finish();
         }

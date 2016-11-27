@@ -8,11 +8,12 @@ import android.widget.LinearLayout;
 
 import com.cpxiao.lightsoff.ExtraKey;
 import com.cpxiao.lightsoff.R;
-import com.cpxiao.minigamelib.activity.BaseActivity;
+import com.cpxiao.lightsoff.ads.core.ZAdPosition;
 
 /**
- * Created by cpxiao on 5/16/16.
  * ResultActivity
+ *
+ * @author cpxiao on 2016/5/16.
  */
 public class ResultActivity extends BaseActivity implements View.OnClickListener {
 
@@ -23,7 +24,12 @@ public class ResultActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_result);
 
         initWidget();
-        initSmallAds("1618817068448912_1619268745070411");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initSmallAds(getApplicationContext(), ZAdPosition.POSITION_RESULT_ACTIVITY);
     }
 
     private void initWidget() {
