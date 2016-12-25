@@ -12,10 +12,10 @@ import android.view.SurfaceView;
 import android.view.View;
 
 import com.cpxiao.androidutils.library.utils.PreferencesUtils;
-import com.cpxiao.lightsoff.Config;
-import com.cpxiao.lightsoff.ExtraKey;
-import com.cpxiao.lightsoff.OnGameListener;
+import com.cpxiao.lib.Config;
 import com.cpxiao.lightsoff.R;
+import com.cpxiao.lightsoff.imps.OnGameListener;
+import com.cpxiao.lightsoff.mode.Extra;
 
 import java.util.Random;
 
@@ -102,10 +102,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Vie
     private void init(final int xCount, final int yCount, final int moves, String store) {
         if (store == null) {
             init(xCount, yCount, moves);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
-            PreferencesUtils.putInt(getContext(), ExtraKey.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), Extra.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), Extra.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), Extra.KEY_X, xCount);
+            PreferencesUtils.putInt(getContext(), Extra.KEY_X, xCount);
             return;
         }
         mXCount = xCount;

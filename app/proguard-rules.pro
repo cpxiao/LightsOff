@@ -16,7 +16,8 @@
 #   public *;
 #}
 
-#FB Start
--keep public class com.facebook.**{*;}
-#FB end
+-dontwarn com.facebook.**
+-keep class com.facebook.** {
+    *;
+}
 

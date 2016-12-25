@@ -1,4 +1,4 @@
-package com.cpxiao.lightsoff;
+package com.cpxiao.lightsoff.mode;
 
 /**
  * Data

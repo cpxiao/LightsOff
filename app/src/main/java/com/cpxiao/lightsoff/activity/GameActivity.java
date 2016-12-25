@@ -9,11 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cpxiao.androidutils.library.utils.PreferencesUtils;
-import com.cpxiao.lightsoff.Data;
-import com.cpxiao.lightsoff.ExtraKey;
-import com.cpxiao.lightsoff.OnGameListener;
+import com.cpxiao.lib.activity.BaseActivity;
+import com.cpxiao.lightsoff.mode.Data;
+import com.cpxiao.lightsoff.mode.Extra;
+import com.cpxiao.lightsoff.imps.OnGameListener;
 import com.cpxiao.lightsoff.R;
-import com.cpxiao.lightsoff.ads.core.ZAdPosition;
 import com.cpxiao.lightsoff.views.GameView;
 
 
@@ -35,15 +35,10 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 
         setContentView(R.layout.activity_game);
 
-        mLevel = getIntent().getIntExtra(ExtraKey.INTENT_EXTRA_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
+        mLevel = getIntent().getIntExtra(Extra.INTENT_EXTRA_LEVEL, Extra.VALUE_LEVEL_DEFAULT);
 
         initWidget();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initAds(getApplicationContext(), ZAdPosition.POSITION_GAME_ACTIVITY);
+        initFbAds50("1618817068448912_1618817468448872");
     }
 
     private void initWidget() {
@@ -96,11 +91,11 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 
     @Override
     public void onGameSuccess() {
-        String key = ExtraKey.KEY_BEST_LEVEL_FORMAT + mLevel;
+        String key = Extra.KEY_BEST_LEVEL_FORMAT + mLevel;
         PreferencesUtils.putInt(GameActivity.this, key, mRemainingSteps);
 
         mLevel++;
-        PreferencesUtils.putInt(GameActivity.this, ExtraKey.KEY_LEVEL, mLevel);
+        PreferencesUtils.putInt(GameActivity.this, Extra.KEY_LEVEL, mLevel);
         ResultActivity.comeToMe(GameActivity.this, mLevel);
         finish();
     }
@@ -118,8 +113,8 @@ public class GameActivity extends BaseActivity implements OnGameListener, View.O
 
     public static void comeToMe(Context context, int level) {
         Intent intent = new Intent(context, GameActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra(ExtraKey.INTENT_EXTRA_LEVEL, level);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(Extra.INTENT_EXTRA_LEVEL, level);
         context.startActivity(intent);
     }
 

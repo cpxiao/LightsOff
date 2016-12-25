@@ -6,10 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cpxiao.androidutils.library.utils.PreferencesUtils;
-import com.cpxiao.lightsoff.ExtraKey;
+import com.cpxiao.lib.activity.BaseActivity;
+import com.cpxiao.lightsoff.mode.Extra;
 import com.cpxiao.lightsoff.R;
-import com.cpxiao.lightsoff.ads.ZAdManager;
-import com.cpxiao.lightsoff.ads.core.ZAdPosition;
 
 /**
  * HomeActivity
@@ -24,21 +23,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_home);
 
         initWidget();
-        //        initAds(getApplicationContext(), "1618817068448912_1618817468448872");
+        initFbAds50("1618817068448912_1618817565115529");
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initAds(getApplicationContext(), ZAdPosition.POSITION_HOME_ACTIVITY);
-    }
-
-    @Override
-    protected void onDestroy() {
-        ZAdManager.getInstance().destroyAll();
-        super.onDestroy();
-        System.gc();
-    }
 
     private void initWidget() {
         findViewById(R.id.btn_play).setOnClickListener(this);
@@ -49,7 +36,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.btn_play) {
-            int level = PreferencesUtils.getInt(this, ExtraKey.KEY_LEVEL, ExtraKey.VALUE_LEVEL_DEFAULT);
+            int level = PreferencesUtils.getInt(this, Extra.KEY_LEVEL, Extra.VALUE_LEVEL_DEFAULT);
             GameActivity.comeToMe(this, level);
         } else if (id == R.id.btn_quit) {
             finish();

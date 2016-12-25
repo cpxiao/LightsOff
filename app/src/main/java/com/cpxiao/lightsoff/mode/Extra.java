@@ -1,11 +1,11 @@
-package com.cpxiao.lightsoff;
+package com.cpxiao.lightsoff.mode;
 
 /**
- * ExtraKey
+ * Extra
  *
  * @author cpxiao on 2016/5/16.
  */
-public class ExtraKey {
+public class Extra {
 
     public static final String KEY_BEST_LEVEL_FORMAT = "KEY_BEST_LEVEL_FORMAT";
     public static final int VALUE_BEST_DEFAULT = 999;
