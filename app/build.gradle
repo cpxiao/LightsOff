@@ -3,8 +3,8 @@ apply plugin: 'com.jakewharton.hugo'
 //apply plugin: 'com.antfortune.freeline'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.cpxiao.lightsoff"
@@ -41,14 +41,16 @@ android {
                 def releaseApkName = packageName +
                         "_v" + defaultConfig.versionName +
                         "_" + variant.productFlavors[0].name +
-                        "_" + new Date().format('yyyyMMddHHmm') + '.apk'
+                        "_" + new Date().format('yyyyMMddHHmm') +
+                        '.apk'
                 output.outputFile = new File(oldFile.parent, releaseApkName)
             }
             if (variant.buildType.name.equals('beta')) {
                 def baseApkName = packageName +
                         "_v" + defaultConfig.versionName + "beta" +
                         "_" + variant.productFlavors[0].name +
-                        "_" + new Date().format('yyyyMMddHHmm') + '.apk'
+                        "_" + new Date().format('yyyyMMddHHmm') +
+                        '.apk'
                 output.outputFile = new File(oldFile.parent, baseApkName)
             }
             if (variant.buildType.name.equals('debug')) {
@@ -59,15 +61,7 @@ android {
 }
 
 dependencies {
-    testCompile 'junit:junit:4.12'
-//	compile 'com.android.support:appcompat-v7:23.4.0'
-
     compile project(':AndroidUtils:library')
-//	compile project(':AndroidMiniGame:library')
-
-    //Facebook广告 start
-    compile files('libs/AudienceNetwork_v4.7.jar')
-    //Facebook广告 end
-    compile 'com.google.firebase:firebase-ads:9.4.0'
+    compile project(':gamelib')
 }
 apply plugin: 'com.google.gms.google-services'
